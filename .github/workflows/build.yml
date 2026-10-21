@@ -1,0 +1,19 @@
+name: Build CHAKOULEY GOAT APK
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install deps
+        run: |
+          sudo apt update
+          sudo apt install -y openjdk-17-jdk python3-pip zip unzip
+          pip install buildozer cython==0.29.36
+      - name: Build
+        run: buildozer android debug
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: CHAKOULEY-GOAT-APK
+          path: bin/*.apk
